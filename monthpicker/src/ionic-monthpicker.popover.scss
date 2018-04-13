@@ -1,0 +1,44 @@
+/* 
+* Ionic 3.x don't supports use "~" to import
+* from node_modules, because the ionic-app-scripts
+* don't uses sass-loader package.
+*
+* So, this import below is a relative path,
+* in combination with "ngPackage.lib.styleIncludePaths"
+* of package.json
+*
+* To use this popover style into your ionic app, 
+* you need:
+*
+* 1. Add this lines to your custom sass.config.js
+*
+* ```json
+* includePaths: [
+*   ...
+*  'node_modules/ionicx-monthpicker/src'
+* ]
+* ```
+* 
+* 2. Into your *.theme.scss or variables.scss, import
+* the specific popover.scss file:
+* 
+* ```sass
+* @import "ionic-monthpicker.popover"
+* ```
+*/
+@import 'ionic.theme.default';
+
+ion-popover.popover-monthpicker .popover-content {
+
+    width: 300px !important;
+    
+    ion-content.monthpicker-content {
+      .scroll-content {
+        margin-top: 25px !important;
+        padding: 16px 0px !important;
+      }
+      ion-row {
+        padding: 20px 0;
+      }
+    }
+}

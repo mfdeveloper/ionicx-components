@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>
+        {{ title }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content padding class="monthpicker-content">
+    <!-- <ion-item-divider *ngFor="let cabecalho of cabecalhos; index as i" (click)="voltar()" center text-center color="light">
+        <h1><span>{{ cabecalho.label }}</span>
+        {{ cabecalho.value }}</h1>
+    </ion-item-divider> -->
+    <ion-grid no-padding class="months-list">
+        <ng-container *ngFor="let month of monthLabels[lang]; let i = index">
+            <ion-row *ngIf="i % 3 == 0" class="month-row">
+                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i])" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i])}">
+                    <span>{{ monthLabels[lang][i] }}</span>
+                    <!-- <ng-container *ngIf="exibirDestaques">
+                        <ion-badge class="destaques-mes" [color]="i % 2 == 0 ? 'secondary': 'primary'" *ngFor="let destaque of mesesComDados[mes]; let i = index">
+                            {{ destaque }}
+                        </ion-badge>
+                    </ng-container> -->
+                </ion-col>
+                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i + 1])" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i + 1])}">
+                        <span>{{ monthLabels[lang][i + 1] }}</span>
+                    <!-- <ng-container *ngIf="exibirDestaques">
+                        <ion-badge class="destaques-mes" [color]="i % 2 == 0 ? 'secondary': 'primary'" *ngFor="let destaque of mesesComDados[mes]; let i = index">
+                            {{ destaque }}
+                        </ion-badge>
+                    </ng-container> -->
+                </ion-col>
+                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i + 2])" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i + 2])}">
+                        <span>{{ monthLabels[lang][i + 2] }}</span>
+                    <!-- <ng-container *ngIf="exibirDestaques">
+                        <ion-badge class="destaques-mes" [color]="i % 2 == 0 ? 'secondary': 'primary'" *ngFor="let destaque of mesesComDados[mes]; let i = index">
+                            {{ destaque }}
+                        </ion-badge>
+                    </ng-container> -->
+                </ion-col>
+            </ion-row>
+        </ng-container>
+    </ion-grid>
+    <button ion-button block color="danger" (click)="cancel()">
+        {{ cancelLabel }}
+    </button>
+</ion-content>
+<!-- <ion-footer>
+    <ion-toolbar>
+       <ion-buttons>
+            <button ion-button icon-start color="danger" (click)="cancel()">
+                <ion-icon name="close"></ion-icon>
+                {{ cancelLabel }}
+            </button>
+       </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
+   -->

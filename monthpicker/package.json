@@ -1,0 +1,41 @@
+{
+    "$schema": "../../../../node_modules/ng-packagr/package.schema.json",
+    "name": "@ionicx-components/monthpicker",
+    "version": "0.0.1",
+    "main": "../../../../dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
+    "scripts": {
+        "prepublish": "npm run package",
+        "package": "ng-packagr -p ./package.json"
+    },
+    "peerDependencies": {
+        "@angular/common": "^5.2.0",
+        "@angular/compiler": "^5.2.0",
+        "@angular/core": "^5.2.0",
+        "@angular/forms": "^5.2.0",
+        "@angular/http": "^5.2.0",
+        "@angular/platform-browser": "^5.2.0",
+        "@angular/platform-browser-dynamic": "^5.2.0",
+        "@angular/router": "^5.2.0",
+        "core-js": "^2.4.1",
+        "rxjs": "^5.5.6",
+        "zone.js": "^0.8.19",
+        "ionic-angular": "^3.2.0"
+    },
+    "devDependencies": {
+        "ng-packagr": "^2.4.2"
+    },
+    "dependencies": {},
+    "ngPackage": {
+        "lib": {
+            "languageLevel": [
+                "dom",
+                "es2015"
+            ],
+            "styleIncludePaths": [
+                "../../../../node_modules/ionic-angular/themes"
+            ],
+            "entryFile": "index.ts"
+        },
+        "dest": "../../../../dist/@ionicx-components/monthpicker"
+    }
+}

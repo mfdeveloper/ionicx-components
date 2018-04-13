@@ -1,0 +1,47 @@
+@import '~ionic-angular/themes/ionic.theme.default';
+
+.months-list {
+  margin-top: 10px;
+  text-align: center;
+  height: 84%;
+
+  .month-row {
+    height: 25%;
+    margin: 0;
+  }
+
+  .month-selected {
+    @extend %month-selected;
+  }
+
+  .month {
+    cursor: pointer;
+    font: {
+      weight: bold;
+      size: 1.4em;
+    }
+    color: #808080;
+
+    &:hover {
+      @extend %month-selected;
+    }
+  }
+}
+
+%month-selected {
+  font: {
+    weight: bold;
+    size: 1.6em;
+  } 
+  
+  // @todo Add more than one option 
+  // of month selected/hover color
+  // color: color($colors, primary);
+
+  span {
+    padding: 3px .5em;
+    color: #fff;
+    background: color($colors, primary);
+    border-radius: 2em;
+  }
+}
