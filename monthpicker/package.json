@@ -1,24 +1,52 @@
 {
-    "$schema": "../../../../node_modules/ng-packagr/package.schema.json",
+    "$schema": "./node_modules/ng-packagr/package.schema.json",
     "name": "@ionicx-components/monthpicker",
     "version": "0.0.1",
+    "description": "Extra components that not exists on ionic 3.x+",
+    "license": "MIT",
+    "homepage": "https://github.com/mfdeveloper/ionicx-components",
+    "bugs": {
+        "email": "mfelipeof@gmail.com",
+        "url": "https://github.com/mfdeveloper/ionicx-components/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mfdeveloper/ionicx-components.git"
+    },
+    "engines": {
+        "node": ">=6.10.0"
+    },
+    "keywords": [
+        "ionic",
+        "ionic-monthpicker",
+        "ionic2-monthpicker",
+        "ionic3-monthpicker",
+        "monthpicker",
+        "framework",
+        "mobile",
+        "cordova",
+        "progressive web app",
+        "pwa",
+        "components",
+        "web components"
+    ],
     "main": "../../../../dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
     "scripts": {
         "prepublish": "npm run package",
         "package": "ng-packagr -p ./package.json"
     },
     "peerDependencies": {
-        "@angular/common": "^5.2.0",
-        "@angular/compiler": "^5.2.0",
-        "@angular/core": "^5.2.0",
-        "@angular/forms": "^5.2.0",
-        "@angular/http": "^5.2.0",
-        "@angular/platform-browser": "^5.2.0",
-        "@angular/platform-browser-dynamic": "^5.2.0",
-        "@angular/router": "^5.2.0",
+        "@angular/common": "^4.1.0",
+        "@angular/compiler": "^4.1.0",
+        "@angular/core": "^4.1.0",
+        "@angular/forms": "^4.1.0",
+        "@angular/http": "^4.1.0",
+        "@angular/platform-browser": "^4.1.0",
+        "@angular/platform-browser-dynamic": "^4.1.0",
+        "@angular/router": "^4.1.0",
         "core-js": "^2.4.1",
-        "rxjs": "^5.5.6",
-        "zone.js": "^0.8.19",
+        "rxjs": "^5.3.1",
+        "zone.js": "^0.8.8",
         "ionic-angular": "^3.2.0"
     },
     "devDependencies": {
