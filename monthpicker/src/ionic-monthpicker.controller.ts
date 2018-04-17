@@ -1,6 +1,6 @@
 import { ModalController, PopoverController } from 'ionic-angular';
 import { Injector, Type } from '@angular/core';
-import { IonicMonthPickerComponent, IonicController } from './ionic-monthpicker.component';
+import { IonicMonthPickerComponent, IonicController, IonicOverlay } from './ionic-monthpicker.component';
 import { Injectable } from '@angular/core';
 
 export interface MonthPickerOptions {
@@ -32,7 +32,7 @@ export class IonicMonthPickerController {
         protected injector: Injector
     ) { }
 
-    create(opts: MonthPickerOptions = {}) {
+    create(opts: MonthPickerOptions = {}): IonicOverlay {
 
         opts.container = opts.container || {
             type: this.containerType
@@ -66,7 +66,6 @@ export class IonicMonthPickerController {
         );
 
         return containerComp;
-
     }
 
     addWrapper(controllerMap: WrapperController): IonicMonthPickerController {

@@ -30,7 +30,7 @@
         "components",
         "web components"
     ],
-    "main": "../../../../dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
+    "main": "dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
     "scripts": {
         "prepublish": "npm run package",
         "package": "ng-packagr -p ./package.json"
@@ -64,6 +64,6 @@
             ],
             "entryFile": "index.ts"
         },
-        "dest": "../../../../dist/@ionicx-components/monthpicker"
+        "dest": "dist/@ionicx-components/monthpicker"
     }
 }

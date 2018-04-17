@@ -1,5 +1,10 @@
+import { FormControl } from '@angular/forms';
 import { Button } from 'ionic-angular';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  Component, ElementRef, Input, Output, ViewChild, ChangeDetectorRef,
+  ChangeDetectionStrategy, OnInit, EventEmitter
+} from '@angular/core';
+
 import { IonicMonthPickerController } from './../../src/ionic-monthpicker.controller';
 
 /**
@@ -10,18 +15,22 @@ import { IonicMonthPickerController } from './../../src/ionic-monthpicker.contro
  */
 @Component({
   selector: 'ion-monthpicker-trigger',
-  templateUrl: 'ionic-monthpicker-trigger.html'
+  templateUrl: 'ionic-monthpicker-trigger.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IonicMonthPickerTriggerComponent {
+export class IonicMonthPickerTriggerComponent implements OnInit {
 
   @ViewChild('btnMonthPicker')
   btnPicker: Button;
 
-  @Input()
-  title = 'Select a month';
+  @Output()
+  afterRender = new EventEmitter<any>();
 
   @Input()
-  text = this.title;
+  title: string;
+
+  @Input()
+  text: string;
 
   @Input()
   lang: string;
@@ -61,12 +70,50 @@ export class IonicMonthPickerTriggerComponent {
   @Input()
   outline = false;
 
+  @Input()
+  itemStart = false;
+
+  @Input()
+  itemEnd = false;
+
+  protected defaultTitle = 'Select a month';
+
   constructor(
     protected elementRef: ElementRef,
+    protected changeDetectorRef: ChangeDetectorRef,
     protected monthPickerCtrl: IonicMonthPickerController
   ) { }
 
-  openPicker() {
+  ngOnInit() {
+
+    if (!this.title) {
+      this.title = this.defaultTitle;
+    }
+
+    this.text = this.title;
+
+    this.afterRender.subscribe(() => {
+      if (this.target instanceof Array) {
+        const target: FormControl = this.target.find(el => el instanceof FormControl ? true : false);
+        if (target && target.value) {
+          this.text = target.value;
+        } else {
+          this.text = this.title;
+        }
+      } else {
+        this.text = this.title;
+      }
+
+      this.changeDetectorRef.detectChanges();
+    });
+
+    this.changeDetectorRef.detectChanges();
+  }
+
+  openPicker(event: Event) {
+
+    event.stopPropagation();
+    event.preventDefault();
 
     if (this.changeBtnTitle) {
       if (this.target instanceof Array && this.target.indexOf(this) === -1) {
@@ -99,5 +146,9 @@ export class IonicMonthPickerTriggerComponent {
 
     const overlay = this.monthPickerCtrl.create(options);
     overlay.present();
+  }
+
+  detectChanges() {
+    this.changeDetectorRef.detectChanges();
   }
 }

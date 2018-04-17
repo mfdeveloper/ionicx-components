@@ -1,3 +1,4 @@
 {
+    "main": "../dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
     "ngPagkage": {}
 }

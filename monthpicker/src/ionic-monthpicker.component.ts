@@ -1,9 +1,16 @@
 import { Component, Type, OnInit, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ViewController, NavParams, Ion, TextInput } from 'ionic-angular';
+import { ViewController, NavParams, NavOptions, Ion, TextInput } from 'ionic-angular';
+
+export interface IonicOverlay {
+    present(navOptions?: NavOptions): Promise<any>;
+    dismiss(data?: any, role?: string, navOptions?: NavOptions): Promise<any>;
+    onDidDismiss(callback: (data: any, role: string) => void): void;
+    onWillDismiss(callback: Function): void;
+}
 
 export interface IonicController {
-    create(component?: any, data?: {}, opts?: any): any;
+    create(component?: any, data?: {}, opts?: any): IonicOverlay;
 }
 
 @Component({
@@ -44,11 +51,14 @@ export class IonicMonthPickerComponent implements OnInit {
         this.changeDetection.detectChanges();
     }
 
-    selectMonth(month: string) {
+    selectMonth(month: string, event: MouseEvent) {
         const container = this.navParams.get('container');
 
         if (container) {
-            this.currentMonth = month;
+            event.stopPropagation();
+            event.preventDefault();
+
+            this.currentMonth = month.toUpperCase();
 
             /**
              * To avoid Ionic problems with detect
@@ -58,10 +68,10 @@ export class IonicMonthPickerComponent implements OnInit {
             this.viewCtrl.onWillDismiss(() => {
                 if (this.target instanceof Array) {
                     for (const element of this.target) {
-                        this.setTargetValue(month, element);
+                        this.setTargetValue(this.currentMonth, element);
                     }
                 } else {
-                    this.setTargetValue(month, this.target);
+                    this.setTargetValue(this.currentMonth, this.target);
                 }
             });
 
@@ -103,12 +113,21 @@ export class IonicMonthPickerComponent implements OnInit {
                 target = target.getElementRef();
             } else if (target.text) {
                 target.text = value;
+                valueChanged = true;
             }
         }
 
-        if (target instanceof FormControl || target instanceof TextInput) {
+        if (target instanceof FormControl) {
             target.setValue(value);
             valueChanged = true;
+        } else if (target instanceof TextInput) {
+            if (target['setValue']) {
+                target['setValue'](value);
+                valueChanged = true;
+            } else {
+                target.writeValue(value);
+                valueChanged = true;
+            }
         } else if (target instanceof ElementRef) {
             const nativeElement = <HTMLElement>target.nativeElement;
 
@@ -123,6 +142,10 @@ export class IonicMonthPickerComponent implements OnInit {
 
         if (valueChanged) {
             this.changeDetection.detectChanges();
+
+            if (typeof target['detectChanges'] === 'function') {
+                target.detectChanges();
+            }
         }
 
         return valueChanged;
@@ -142,7 +165,7 @@ export class IonicMonthPickerComponent implements OnInit {
 
     isSelected(month: string): boolean {
         if (this.currentMonth && month) {
-            return this.currentMonth.toLowerCase() === month.toLowerCase();
+            return this.currentMonth.toUpperCase() === month.toUpperCase();
         }
         return false;
     }

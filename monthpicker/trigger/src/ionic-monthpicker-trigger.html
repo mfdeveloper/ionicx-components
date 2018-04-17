@@ -1,4 +1,13 @@
-<button #btnMonthPicker ion-button icon-left [color]="color" [round]="round" [full]="full" [large]="large" [outline]="outline" (click)="openPicker()" >
+<button #btnMonthPicker ion-button icon-left 
+    [color]="color" 
+    [round]="round" 
+    [full]="full" 
+    [large]="large" 
+    [outline]="outline"
+    [attr.item-start]="itemStart ? true : ''"
+    [attr.item-end]="itemEnd ? true : ''"
+    (click)="openPicker($event)" >
+
     <ion-icon name="calendar"></ion-icon>
-  {{ text }}
+    {{ text }}
 </button>

@@ -13,7 +13,7 @@
     <ion-grid no-padding class="months-list">
         <ng-container *ngFor="let month of monthLabels[lang]; let i = index">
             <ion-row *ngIf="i % 3 == 0" class="month-row">
-                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i])" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i])}">
+                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i], $event)" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i])}">
                     <span>{{ monthLabels[lang][i] }}</span>
                     <!-- <ng-container *ngIf="exibirDestaques">
                         <ion-badge class="destaques-mes" [color]="i % 2 == 0 ? 'secondary': 'primary'" *ngFor="let destaque of mesesComDados[mes]; let i = index">
@@ -21,7 +21,7 @@
                         </ion-badge>
                     </ng-container> -->
                 </ion-col>
-                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i + 1])" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i + 1])}">
+                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i + 1], $event)" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i + 1])}">
                         <span>{{ monthLabels[lang][i + 1] }}</span>
                     <!-- <ng-container *ngIf="exibirDestaques">
                         <ion-badge class="destaques-mes" [color]="i % 2 == 0 ? 'secondary': 'primary'" *ngFor="let destaque of mesesComDados[mes]; let i = index">
@@ -29,7 +29,7 @@
                         </ion-badge>
                     </ng-container> -->
                 </ion-col>
-                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i + 2])" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i + 2])}">
+                <ion-col align-self-center col-4 col-md-4 (click)="selectMonth(monthLabels[lang][i + 2], $event)" class="month" [ngClass]="{ 'month-selected': isSelected(monthLabels[lang][i + 2])}">
                         <span>{{ monthLabels[lang][i + 2] }}</span>
                     <!-- <ng-container *ngIf="exibirDestaques">
                         <ion-badge class="destaques-mes" [color]="i % 2 == 0 ? 'secondary': 'primary'" *ngFor="let destaque of mesesComDados[mes]; let i = index">
@@ -44,14 +44,3 @@
         {{ cancelLabel }}
     </button>
 </ion-content>
-<!-- <ion-footer>
-    <ion-toolbar>
-       <ion-buttons>
-            <button ion-button icon-start color="danger" (click)="cancel()">
-                <ion-icon name="close"></ion-icon>
-                {{ cancelLabel }}
-            </button>
-       </ion-buttons>
-    </ion-toolbar>
-</ion-footer>
-   -->
