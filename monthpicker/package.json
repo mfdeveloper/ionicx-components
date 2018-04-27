@@ -32,7 +32,7 @@
     ],
     "main": "dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
     "scripts": {
-        "prepublish": "npm run package",
+        "publishPackage": "npm run package && npm publish --access public ./dist",
         "package": "ng-packagr -p ./package.json"
     },
     "peerDependencies": {
@@ -51,7 +51,8 @@
     },
     "devDependencies": {
         "ng-packagr": "^2.4.2",
-        "ionic-angular": "^3.2.0"
+        "ionic-angular": "^3.2.0",
+        "hoek": "5.0.3"
     },
     "dependencies": {},
     "ngPackage": {
