@@ -1,4 +1,4 @@
 {
-    "main": "../dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
+    "main": "../dist/@ionicx-components/monthpicker/bundles/monthpicker.umd.min.js",
     "ngPagkage": {}
 }

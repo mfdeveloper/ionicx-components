@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/ng-packagr/package.schema.json",
     "name": "@ionicx-components/monthpicker",
-    "version": "0.0.3",
+    "version": "0.0.7",
     "description": "Extra components that not exists on ionic 3.x+",
     "license": "MIT",
     "homepage": "https://github.com/mfdeveloper/ionicx-components",
@@ -30,28 +30,28 @@
         "components",
         "web components"
     ],
-    "main": "dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
+    "main": "dist/@ionicx-components/monthpicker/bundles/monthpicker.umd.min.js",
     "scripts": {
-        "prepublish": "npm run package",
-        "package": "ng-packagr -p ./package.json"
+        "publishPackage": "npm run package && npm publish --access public ./dist",
+        "package": "ng-packagr -p ./package.json && cp -f src/ionic-monthpicker.popover.scss ./dist/@ionicx-components/monthpicker/src/ionic-monthpicker.popover.scss"
     },
     "peerDependencies": {
-        "@angular/common": "^4.1.0",
-        "@angular/compiler": "^4.1.0",
-        "@angular/core": "^4.1.0",
-        "@angular/forms": "^4.1.0",
-        "@angular/http": "^4.1.0",
-        "@angular/platform-browser": "^4.1.0",
-        "@angular/platform-browser-dynamic": "^4.1.0",
-        "@angular/router": "^4.1.0",
-        "core-js": "^2.4.1",
-        "rxjs": "^5.3.1",
-        "zone.js": "^0.8.8",
-        "ionic-angular": "^3.2.0"
+        "@angular/common": "4.1.0",
+        "@angular/compiler": "4.1.0",
+        "@angular/core": "4.1.0",
+        "@angular/forms": "4.1.0",
+        "@angular/http": "4.1.0",
+        "@angular/platform-browser": "4.1.0",
+        "@angular/platform-browser-dynamic": "4.1.0",
+        "@angular/router": "4.1.0",
+        "core-js": "2.4.1",
+        "rxjs": "5.3.1",
+        "zone.js": "0.8.8",
+        "ionic-angular": "3.2.0"
     },
     "devDependencies": {
-        "ng-packagr": "^2.4.2",
-        "ionic-angular": "^3.2.0"
+        "ionic-angular": "3.2.0",
+        "ng-packagr": "1.7.0"
     },
     "dependencies": {},
     "ngPackage": {
@@ -63,7 +63,10 @@
             "styleIncludePaths": [
                 "./node_modules/ionic-angular/themes"
             ],
-            "entryFile": "index.ts"
+            "entryFile": "index.ts",
+            "externals": {
+                "ionic-angular": "ionicBundle"
+            }
         },
         "dest": "dist/@ionicx-components/monthpicker"
     }
