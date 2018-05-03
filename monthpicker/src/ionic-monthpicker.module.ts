@@ -4,7 +4,6 @@ import { IonicModule } from 'ionic-angular';
 
 import { IonicMonthPickerComponent } from './ionic-monthpicker.component';
 import { IonicMonthPickerTriggerComponent } from './../trigger/src/ionic-monthpicker-trigger.component';
-// import { IonicMonthPickerTriggerComponent } from './ionic-monthpicker-trigger.component';
 import { IonicMonthPickerController } from './ionic-monthpicker.controller';
 
 @NgModule({

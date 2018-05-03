@@ -2,17 +2,6 @@ import { Component, Type, OnInit, ElementRef, ChangeDetectionStrategy, ChangeDet
 import { FormControl } from '@angular/forms';
 import { ViewController, NavParams, NavOptions, Ion, TextInput } from 'ionic-angular';
 
-export interface IonicOverlay {
-    present(navOptions?: NavOptions): Promise<any>;
-    dismiss(data?: any, role?: string, navOptions?: NavOptions): Promise<any>;
-    onDidDismiss(callback: (data: any, role: string) => void): void;
-    onWillDismiss(callback: Function): void;
-}
-
-export interface IonicController {
-    create(component?: any, data?: {}, opts?: any): IonicOverlay;
-}
-
 @Component({
     selector: 'ion-monthpicker',
     templateUrl: './ionic-monthpicker.html',
