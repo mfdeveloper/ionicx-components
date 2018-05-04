@@ -1,17 +1,11 @@
-import { Component, Type, OnInit, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+    Component, Type, OnInit, ElementRef,
+    ChangeDetectionStrategy, ChangeDetectorRef
+} from '@angular/core';
+
 import { FormControl } from '@angular/forms';
+
 import { ViewController, NavParams, NavOptions, Ion, TextInput } from 'ionic-angular';
-
-export interface IonicOverlay {
-    present(navOptions?: NavOptions): Promise<any>;
-    dismiss(data?: any, role?: string, navOptions?: NavOptions): Promise<any>;
-    onDidDismiss(callback: (data: any, role: string) => void): void;
-    onWillDismiss(callback: Function): void;
-}
-
-export interface IonicController {
-    create(component?: any, data?: {}, opts?: any): IonicOverlay;
-}
 
 @Component({
     selector: 'ion-monthpicker',
@@ -58,7 +52,7 @@ export class IonicMonthPickerComponent implements OnInit {
             event.stopPropagation();
             event.preventDefault();
 
-            this.currentMonth = month.toUpperCase();
+            this.setMonth(month.toUpperCase());
 
             /**
              * To avoid Ionic problems with detect
@@ -66,13 +60,7 @@ export class IonicMonthPickerComponent implements OnInit {
              * before dismiss()
              */
             this.viewCtrl.onWillDismiss(() => {
-                if (this.target instanceof Array) {
-                    for (const element of this.target) {
-                        this.setTargetValue(this.currentMonth, element);
-                    }
-                } else {
-                    this.setTargetValue(this.currentMonth, this.target);
-                }
+                this.setTargetValue(this.getMonth(), this.target);
             });
 
             this.viewCtrl.dismiss();
@@ -108,7 +96,20 @@ export class IonicMonthPickerComponent implements OnInit {
         target = target || this.navParams.get('target');
         let valueChanged = false;
 
-        if (target) {
+        if (!target) {
+            console.warn(
+                '[TargetUndefined] A(s) target(s) is undefined. Are you sure that not need ' +
+                'set the selected month to anyone component?'
+            );
+            return;
+        }
+
+        if (target instanceof Array) {
+            for (const element of target) {
+                this.setTargetValue(this.getMonth(), element);
+            }
+        } else {
+
             if (target instanceof Ion) {
                 target = target.getElementRef();
             } else if (target.text) {
