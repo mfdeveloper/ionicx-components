@@ -1,30 +1,48 @@
-import { FormControl } from '@angular/forms';
-import { Button } from 'ionic-angular';
 import {
   Component, ElementRef, Input, Output, ViewChild, ChangeDetectorRef,
-  ChangeDetectionStrategy, OnInit, EventEmitter
+  ChangeDetectionStrategy, OnInit, EventEmitter, HostListener, Optional, Host, SkipSelf
 } from '@angular/core';
+import {
+  FormControl, NG_VALUE_ACCESSOR,
+  ControlValueAccessor, ControlContainer, AbstractControl
+} from '@angular/forms';
+import { Button, Ion } from 'ionic-angular';
 
 import { IonicMonthPickerController } from './../../src/ionic-monthpicker.controller';
 
 /**
- * Generated class for the IonicMonthPickerTriggerComponent component.
+ * A custom button trigger component, to open a month calendar into
+ * a overlay (modal, popover, page...)
  *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+ * This is a custom for form component, that can be used with
+ * Angular Reactive forms
+ *
+ * @see https://blog.angularindepth.com/never-again-be-confused-when-implementing-controlvalueaccessor-in-angular-forms-93b9eee9ee83
+ * @see https://stackoverflow.com/questions/44731894/get-access-to-formcontrol-from-the-custom-form-component-in-angular
  */
 @Component({
   selector: 'ion-monthpicker-trigger',
   templateUrl: 'ionic-monthpicker-trigger.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: IonicMonthPickerTriggerComponent,
+    multi: true
+  }]
 })
-export class IonicMonthPickerTriggerComponent implements OnInit {
+export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAccessor {
 
   @ViewChild('btnMonthPicker')
   btnPicker: Button;
 
   @Output()
-  afterRender = new EventEmitter<any>();
+  change = new EventEmitter<string>();
+
+  @Output()
+  touched = new EventEmitter<TouchEvent>();
+
+  @Input()
+  formControlName: string;
 
   @Input()
   title: string;
@@ -46,8 +64,8 @@ export class IonicMonthPickerTriggerComponent implements OnInit {
     type?: string;
     opts?: any;
   } = {
-    type: 'modal'
-  };
+      type: 'modal'
+    };
 
   @Input()
   target: any[] | any;
@@ -78,9 +96,13 @@ export class IonicMonthPickerTriggerComponent implements OnInit {
 
   protected defaultTitle = 'Select a month';
 
+  protected control: AbstractControl;
+
   constructor(
     protected elementRef: ElementRef,
     protected changeDetectorRef: ChangeDetectorRef,
+    @Optional() @Host() @SkipSelf()
+    protected controlContainer: ControlContainer,
     protected monthPickerCtrl: IonicMonthPickerController
   ) { }
 
@@ -92,22 +114,60 @@ export class IonicMonthPickerTriggerComponent implements OnInit {
 
     this.text = this.title;
 
-    this.afterRender.subscribe(() => {
-      if (this.target instanceof Array) {
-        const target: FormControl = this.target.find(el => el instanceof FormControl ? true : false);
-        if (target && target.value) {
-          this.text = target.value;
-        } else {
-          this.text = this.title;
-        }
-      } else {
-        this.text = this.title;
-      }
-
-      this.changeDetectorRef.detectChanges();
-    });
+    if (this.controlContainer && this.formControlName) {
+      this.control = this.controlContainer.control.get(this.formControlName);
+    }
 
     this.changeDetectorRef.detectChanges();
+  }
+
+  writeValue(value: any) {
+
+    if (this.control) {
+      this.text = this.control.value;
+    }
+
+    if (this.target instanceof Array) {
+      for (let target of this.target) {
+        if (this.target instanceof FormControl) {
+          if (target && target.value) {
+            this.text = target.value;
+          }
+        } else if (target instanceof Ion) {
+          target = target.getElementRef();
+        }
+
+        if (target instanceof ElementRef) {
+          const nativeElement = <HTMLElement>target.nativeElement;
+
+          if (nativeElement instanceof HTMLInputElement) {
+            nativeElement.value = value;
+          } else {
+            nativeElement.innerText = value;
+          }
+        }
+      }
+    }
+
+    this.changeDetectorRef.detectChanges();
+  }
+
+  registerOnChange(fn: any) {
+    this.change.subscribe(fn);
+  }
+
+  registerOnTouched(fn: any) {
+    this.touched.subscribe(fn);
+  }
+
+  @HostListener('change', ['$event.target.value'])
+  onChange(value: string) {
+    this.change.emit(value);
+  }
+
+  @HostListener('blur', ['$event'])
+  onTouched(event: TouchEvent) {
+    this.touched.emit(event);
   }
 
   openPicker(event: Event) {

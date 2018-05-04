@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { NavOptions } from 'ionic-angular';
+import { NavOptions, ViewController } from 'ionic-angular';
 
 export interface MonthPickerOptions {
     title?: string;
@@ -20,6 +20,7 @@ export interface WrapperController {
 }
 
 export interface IonicOverlay {
+    overlay?: ViewController;
     present(navOptions?: NavOptions): Promise<any>;
     dismiss(data?: any, role?: string, navOptions?: NavOptions): Promise<any>;
     onDidDismiss(callback: (data: any, role: string) => void): void;
