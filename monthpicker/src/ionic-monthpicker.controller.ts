@@ -82,6 +82,15 @@ export class IonicMonthPickerController {
                 opts.container.opts
             );
 
+            containerComp.onWillDismiss(() => {
+                if (opts.triggerComponent &&
+                    (opts.triggerComponent.control || opts.triggerComponent.writeValue instanceof Function)) {
+                    if (opts.triggerComponent.touched) {
+                        opts.triggerComponent.touched.emit();
+                    }
+                }
+            });
+
             return containerComp;
         }
 

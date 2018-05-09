@@ -4,5 +4,6 @@ export { IonicMonthPickerController } from './src/ionic-monthpicker.controller';
 
 export {
     WrapperController, MonthPickerOptions,
-    IonicOverlay, IonicController
+    IonicOverlay, IonicController, FieldFormControl,
+    FIELD_CONTROL_TOKEN
 } from './src/ionic-monthpicker-options';
