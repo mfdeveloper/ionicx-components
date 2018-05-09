@@ -1,9 +1,11 @@
-import { Type } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
+import { Type, InjectionToken } from '@angular/core';
 import { NavOptions, ViewController } from 'ionic-angular';
 
 export interface MonthPickerOptions {
     title?: string;
     component?: Type<any>;
+    triggerComponent?: any;
     data?: any;
     lang?: string;
     container?: {
@@ -30,3 +32,9 @@ export interface IonicOverlay {
 export interface IonicController {
     create(component?: any, data?: {}, opts?: any): IonicOverlay;
 }
+
+export interface FieldFormControl {
+    control: AbstractControl;
+}
+
+export const FIELD_CONTROL_TOKEN = new InjectionToken<FieldFormControl>('FieldFormControl');

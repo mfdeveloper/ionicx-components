@@ -1,14 +1,16 @@
 import {
   Component, ElementRef, Input, Output, ViewChild, ChangeDetectorRef,
-  ChangeDetectionStrategy, OnInit, EventEmitter, HostListener, Optional, Host, SkipSelf
+  ChangeDetectionStrategy, OnInit, EventEmitter, HostListener,
+  Optional, Host, SkipSelf, forwardRef
 } from '@angular/core';
 import {
-  FormControl, NG_VALUE_ACCESSOR,
-  ControlValueAccessor, ControlContainer, AbstractControl
+  FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor,
+  ControlContainer, AbstractControl
 } from '@angular/forms';
 import { Button, Ion } from 'ionic-angular';
 
 import { IonicMonthPickerController } from './../../src/ionic-monthpicker.controller';
+import { FIELD_CONTROL_TOKEN } from './../../src/ionic-monthpicker-options';
 
 /**
  * A custom button trigger component, to open a month calendar into
@@ -24,11 +26,17 @@ import { IonicMonthPickerController } from './../../src/ionic-monthpicker.contro
   selector: 'ion-monthpicker-trigger',
   templateUrl: 'ionic-monthpicker-trigger.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: IonicMonthPickerTriggerComponent,
-    multi: true
-  }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IonicMonthPickerTriggerComponent),
+      multi: true
+    },
+    {
+      provide: FIELD_CONTROL_TOKEN,
+      useExisting: forwardRef(() => IonicMonthPickerTriggerComponent)
+    }
+  ]
 })
 export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAccessor {
 
@@ -123,8 +131,8 @@ export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAcc
 
   writeValue(value: any) {
 
-    if (this.control) {
-      this.text = this.control.value;
+    if (this.control && (value && value !== '')) {
+      this.text = value;
     }
 
     if (this.target instanceof Array) {
@@ -166,7 +174,7 @@ export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAcc
   }
 
   @HostListener('blur', ['$event'])
-  onTouched(event: TouchEvent) {
+  onTouched(event?: TouchEvent) {
     this.touched.emit(event);
   }
 
@@ -186,6 +194,7 @@ export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAcc
     const options: any = {
       title: this.title,
       container: this.container,
+      triggerComponent: this,
       data: {
         target: this.target
       }

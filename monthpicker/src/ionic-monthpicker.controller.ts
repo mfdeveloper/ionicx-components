@@ -60,7 +60,7 @@ export class IonicMonthPickerController {
          */
         if (wrapperContainer.controller === NavController) {
 
-            opts.data.container = this.app['getActiveNavs'] ? this.app.getActiveNavs()[0] : this.app.getActiveNav();
+            opts.data.container = this.app['getActiveNavs'] ? this.app['getActiveNavs']()[0] : this.app.getActiveNav();
             if (!opts.data.container) {
                 throw new Error(`At least one NavController is required to use a container type "${opts.container.type}"`);
             }
@@ -81,6 +81,15 @@ export class IonicMonthPickerController {
                 opts.data,
                 opts.container.opts
             );
+
+            containerComp.onWillDismiss(() => {
+                if (opts.triggerComponent &&
+                    (opts.triggerComponent.control || opts.triggerComponent.writeValue instanceof Function)) {
+                    if (opts.triggerComponent.touched) {
+                        opts.triggerComponent.touched.emit();
+                    }
+                }
+            });
 
             return containerComp;
         }
