@@ -10,7 +10,7 @@ import {
 import { Button, Ion } from 'ionic-angular';
 
 import { IonicMonthPickerController } from './../../src/ionic-monthpicker.controller';
-import { FIELD_CONTROL_TOKEN } from './../../src/ionic-monthpicker-options';
+import { MonthPickerOptions, FIELD_CONTROL_TOKEN } from './../../src/ionic-monthpicker-options';
 
 /**
  * A custom button trigger component, to open a month calendar into
@@ -69,7 +69,7 @@ export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAcc
 
   @Input()
   container: {
-    type?: string;
+    type: string;
     opts?: any;
   } = {
       type: 'modal'
@@ -191,7 +191,7 @@ export class IonicMonthPickerTriggerComponent implements OnInit, ControlValueAcc
       }
     }
 
-    const options: any = {
+    const options: MonthPickerOptions = {
       title: this.title,
       container: this.container,
       triggerComponent: this,

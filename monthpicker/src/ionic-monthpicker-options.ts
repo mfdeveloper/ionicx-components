@@ -8,6 +8,8 @@ export interface MonthPickerOptions {
     triggerComponent?: any;
     data?: any;
     lang?: string;
+    monthLabels?: { [key: string]: string[] };
+    cancelLabel?: string;
     container?: {
         type: string;
         opts?: any;

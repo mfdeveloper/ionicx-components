@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/ng-packagr/package.schema.json",
     "name": "@ionicx-components/monthpicker",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "description": "Extra components that not exists on ionic 3.x+",
     "license": "MIT",
     "homepage": "https://github.com/mfdeveloper/ionicx-components",

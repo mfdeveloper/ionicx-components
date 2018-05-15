@@ -2,9 +2,7 @@ import {
     Component, Type, OnInit, ElementRef,
     ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
-
 import { FormControl } from '@angular/forms';
-
 import { ViewController, NavParams, NavOptions, Ion, TextInput } from 'ionic-angular';
 
 @Component({
@@ -37,6 +35,8 @@ export class IonicMonthPickerComponent implements OnInit {
 
         this.title = this.navParams.get('title') || this.title;
         this.lang = this.navParams.get('lang') || this.lang;
+        this.cancelLabel = this.navParams.get('cancelLabel') || this.cancelLabel;
+        this.monthLabels = this.navParams.get('monthLabels') || this.monthLabels;
 
         this.target = this.navParams.get('target');
         if (this.target) {

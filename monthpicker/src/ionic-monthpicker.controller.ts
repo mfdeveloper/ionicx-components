@@ -49,6 +49,14 @@ export class IonicMonthPickerController {
             opts.data.lang = opts.lang;
         }
 
+        if (opts.monthLabels) {
+            opts.data.monthLabels = opts.monthLabels;
+        }
+
+        if (opts.cancelLabel) {
+            opts.data.cancelLabel = opts.cancelLabel;
+        }
+
         let container: IonicController | NavController = null;
 
         /**
