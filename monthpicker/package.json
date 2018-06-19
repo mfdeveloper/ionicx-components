@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/ng-packagr/package.schema.json",
     "name": "@ionicx-components/monthpicker",
-    "version": "0.0.15",
+    "version": "0.0.19",
     "description": "Extra components that not exists on ionic 3.x+",
     "license": "MIT",
     "homepage": "https://github.com/mfdeveloper/ionicx-components",
@@ -33,7 +33,7 @@
     "main": "dist/@ionicx-components/monthpicker/bundles/ionicx-components-monthpicker.umd.js",
     "scripts": {
         "publishPackage": "npm run package && npm publish --access public ./dist/@ionicx-components/monthpicker",
-        "package": "ng-packagr -p ./package.json"
+        "package": "ng-packagr -p ./package.json && cp -R -f sample dist/@ionicx-components/monthpicker"
     },
     "peerDependencies": {
         "@angular/common": "^4.1.0",
@@ -50,7 +50,7 @@
         "ionic-angular": "^3.2.0"
     },
     "devDependencies": {
-        "ng-packagr": "^2.4.2",
+        "ng-packagr": "2.4.2",
         "ionic-angular": "^3.2.0",
         "hoek": "5.0.3"
     },
